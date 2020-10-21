@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import Header from './Components/Header.js'
-import Special from './Components/Special.js'
-import Apps from './Components/Apps.js'
-import Lunch from './Components/Lunch.js'
-import Entrees from './Components/Entrees.js';
-import Sides from './Components/Sides.js'
-import Desserts from './Components/Desserts.js'
+import Menu from './Components/Menu.js'
 import Staff from './Components/Staff'
 import { /*Components*/ } from 'reactstrap';
+import Remy from "./img/remy.png";
+import Alfredo from "./img/alfredo.jpg";
+import Colette from "./img/Colette.jpg";
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      menu: []
-      
+      menu: [],
+
+      members: [
+        {name: "alfredo linguini",
+        role: "sous-chef de cuisine",
+        img: Alfredo},
+        {name: "remy",
+         role: "chef de cuisine",
+         img: Remy},
+         {name: "colette tatou",
+         role: "rôtisseur",
+         img: Colette}
+    ]
     }
   }
 
@@ -33,19 +42,18 @@ class App extends Component {
     window.localStorage.setItem('menu', JSON.stringify(this.state.menu))
   }
 
-  
+  price(){
+
+  }
+
+
 
   render(){
     return (
       <div className="App">
         <Header />
-        <Staff />
-        <Special />
-        <Apps />
-        <Lunch />
-        <Entrees />
-        <Sides />
-        <Desserts />
+        <Staff members={this.state.members} />
+        <Menu menu={this.state.menu} />
       </div>
     );
   }
