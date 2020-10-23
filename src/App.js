@@ -33,14 +33,14 @@ class App extends Component {
 
       ]
 
-        /*itemPicker() populates here*/
+      /*itemPicker() populates here*/
       ,
 
       main: [
 
       ]
-        /*itemPicker() populates here*/
-    ,
+      /*itemPicker() populates here*/
+      ,
 
 
       sides: [
@@ -103,37 +103,37 @@ class App extends Component {
 
   async componentDidMount() {
     //if rawFoods object is in localStorage load that, else call API to get foods
-    const foods = localStorage.getItem('rawFoods');
-    if (!foods){
+    // const foods = localStorage.getItem('rawFoods');
+    // if (foods) {
+    //   this.setState({ rawFoods: foods })
+    // } else {
+      let self = this
+      await Axios.get('https://entree-f18.herokuapp.com/v1/menu/25')
+        .then(res => {
+          self.setState({ rawFoods: res.data.menu_items });
+          //manipulate response data to store in state arrays
+          self.parseRawFoods(self.state.rawFoods);
+          //pick apps
+          self.singleItemPicker(self.state.sideDishes, "apps", self.state.menu[0].qty)
+          console.log(self.state)
+          //pick lunch
+          self.multipleItemPicker(self.state.entrees, self.state.sideDishes, "lunch", self.state.menu[1].qty, 1)
 
+          //pick mains
+          self.multipleItemPicker(self.state.entrees, self.state.sideDishes, "main", self.state.menu[2].qty, 2)
+
+          //pick sideDishes
+          self.singleItemPicker(self.state.sideDishes, "sides", self.state.menu[3].qty)
+
+          //pick desserts
+          self.singleItemPicker(self.state.entrees, "desserts", self.state.menu[4].qty)
+        })
     }
-    let self = this
-    await Axios.get('https://entree-f18.herokuapp.com/v1/menu/25')
-      .then( res => {
-        self.setState({ rawFoods: res.data.menu_items });
-        //manipulate response data to store in state arrays
-        self.parseRawFoods(self.state.rawFoods);
-        //pick apps
-        self.singleItemPicker(self.state.sideDishes, "apps", self.state.menu[0].qty)
-        console.log(self.state)
-        //pick lunch
-        self.multipleItemPicker(self.state.entrees, self.state.sideDishes, "lunch", self.state.menu[1].qty, 1)
-    
-        //pick mains
-        self.multipleItemPicker(self.state.entrees, self.state.sideDishes, "main", self.state.menu[2].qty, 2)
-    
-        //pick sideDishes
-        self.singleItemPicker(self.state.sideDishes, "sides", self.state.menu[3].qty)
-    
-        //pick desserts
-        self.singleItemPicker(self.state.entrees, "desserts", self.state.menu[4].qty)
-      })
-
-  }
+  // }
 
   componentDidUpdate() {
     //save list to localStorage on unload.
-    //window.localStorage.setItem('rawFoods', JSON.stringify(this.state.foods))
+    window.localStorage.setItem('rawFoods', JSON.stringify(this.state.rawFoods))
 
 
   }
@@ -145,14 +145,14 @@ class App extends Component {
     for (let i = 0; i < arr.length; i++) {
       let splitOne = this.state.rawFoods[i].description.split(' and '); // split = [adj entree with adj side1, adj side2]
       let _side = splitOne.pop();
-      this.setState({sideDishes: [...this.state.sideDishes, _side]})
+      this.setState({ sideDishes: [...this.state.sideDishes, _side] })
 
       let splitTwo = splitOne.toString().split(' with ');
       _side = splitTwo.pop();
-      this.setState({sideDishes: [...this.state.sideDishes, _side]})
+      this.setState({ sideDishes: [...this.state.sideDishes, _side] })
 
       let _entree = splitTwo.toString();
-      this.setState({entrees: [...this.state.entrees, _entree]})
+      this.setState({ entrees: [...this.state.entrees, _entree] })
 
     }
   }
@@ -164,14 +164,14 @@ class App extends Component {
       //push empty element into arrTo
       //determine random index of arrFrom
       let randIndex = Math.floor(Math.random() * firstArrFrom.length);
-      
+
       //set arrTo[i] = arrFrom[randomIndex]
       tempArray.push(firstArrFrom[randIndex]);
-      
-    } 
+
+    }
     console.log(tempArray, arrTo)
     console.log(this.state[arrTo])
-    this.setState({[arrTo]: tempArray})
+    this.setState({ [arrTo]: tempArray })
   }
   multipleItemPicker(firstArrFrom, secondArrFrom, arrTo, qty, level) {
     //loop qty times to populate elements in arrTo
@@ -186,34 +186,34 @@ class App extends Component {
       _arr.push(firstArrFrom[randIndex]);
       _arr.push("with");
       _arr.push(secondArrFrom[randIndex]);
-      if (level > 1){
+      if (level > 1) {
         _arr.push("and");
         _arr.push(secondArrFrom[randIndex + 1]);
       }
       let str = _arr.join(" ");
-      this.setState({[arrTo]: [...this.state[arrTo], str]});
+      this.setState({ [arrTo]: [...this.state[arrTo], str] });
     }
     console.log(arrTo);
   }
 
-  
+
   render() {
     return (
       <div className="App">
-      <Header />
-      <Staff
-        members={this.state.members} />
-      <Menu
-        menu={this.state.menu}
-        apps={this.state.apps}
-        lunch={this.state.lunch}
-        main={this.state.main}
-        sides={this.state.sides}
-        desserts={this.state.desserts}
-        images={this.state.images} />
-    </div>
-  );
-}
+        <Header />
+        <Staff
+          members={this.state.members} />
+        <Menu
+          menu={this.state.menu}
+          apps={this.state.apps}
+          lunch={this.state.lunch}
+          main={this.state.main}
+          sides={this.state.sides}
+          desserts={this.state.desserts}
+          images={this.state.images} />
+      </div>
+    );
+  }
 
 }
 

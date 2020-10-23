@@ -58,9 +58,7 @@ function Menu(props) {
         )}
       </Jumbotron>
 
-
-
-
+      {/* Dynamic Lunch */}
       <Jumbotron className="container-fluid pt-4">
         <Row>
           <Col>
@@ -68,26 +66,25 @@ function Menu(props) {
             <hr />
           </Col>
         </Row>
-        {
-          props.lunch.map((item, idx) =>
-            <Row className="my-2">
-              <Col className="col-9 text-left">
-                <h5 key={idx + 200}>{item}</h5>
-              </Col>
-              <Col className="col-3 text-right">
-                <h5>€{item.length}</h5>
-              </Col>
-            </Row>
-          )
+        {props.lunch.map((item, idx) =>
+          <Row className="my-2">
+            <Col className="col-9 text-left">
+              <h5 key={idx + 200}>{item}</h5>
+            </Col>
+            <Col className="col-3 text-right">
+              <h5>€{item.length}</h5>
+            </Col>
+          </Row>
+        )
         }
       </Jumbotron>
 
+      {/* Dynamic Main Dishes */}
       <Jumbotron className="container-fluid pt-4">
         <Row>
           <Col>
             <h3 className="text-center">{props.menu[2].name}</h3>
             <hr />
-
           </Col>
         </Row>
         {props.main.map((item, idx) =>
@@ -102,12 +99,12 @@ function Menu(props) {
         )}
       </Jumbotron>
 
+      {/* Dynamic Sides */}
       <Jumbotron className="container-fluid pt-4">
         <Row>
           <Col>
             <h3 className="text-center">{props.menu[3].name}</h3>
             <hr />
-
           </Col>
         </Row>
         {props.sides.map((item, idx) =>
@@ -122,12 +119,12 @@ function Menu(props) {
         )}
       </Jumbotron>
 
+      {/* Dynamic Dessert */}
       <Jumbotron className="container-fluid pt-4">
         <Row>
           <Col>
             <h3 className="text-center">{props.menu[4].name}</h3>
             <hr />
-
           </Col>
         </Row>
         {props.desserts.map((item, idx) =>
