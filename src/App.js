@@ -2,43 +2,64 @@ import React, { Component } from 'react';
 import Header from './Components/Header.js'
 import Menu from './Components/Menu.js'
 import Staff from './Components/Staff'
-import { /*Components*/ } from 'reactstrap';
+import {  } from 'reactstrap';
 import Remy from "./img/remy.png";
 import Alfredo from "./img/alfredo.jpg";
 import Colette from "./img/Colette.png";
-import Ratatouille from "./img/dish.png"
+import Ratatouille from "./img/dish.png";
 import Axios from 'axios';
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      rawFoods: [
+
+      ],
+
+      adjectives: [
+
+      ],
+
+      entrees: [
+
+      ],
+
+      sides: [
+
+      ],
+      
       menu: [
-        {
-          name: "special",
-          qty: 1,
-        },
         {
           name: "apps",
           qty: 8,
+          lowRange: 6,
+          highRange: 12
         },
         {
           name: "lunch",
           qty: 10,
+          lowRange: 12,
+          highRange: 25
         },
         {
-          name: "entrees",
+          name: "mainDishes",
           qty: 15,
+          lowRange: 15,
+          highRange: 35
         },
         {
           name: "sides",
           qty: 12,
+          lowRange: 3,
+          highRange: 5
         },
         {
           name: "desserts",
           qty: 8,
+          lowRange: 6,
+          highRange: 10
         },
-
       ],
 
       members: [
@@ -68,6 +89,8 @@ class App extends Component {
 
       ]
     }
+
+    this.price = this.price.bind(this);
   }
 
 
@@ -81,50 +104,84 @@ class App extends Component {
   //   "description": "Adj Noun with Adj Noun and Adj Noun"
   //   },
 
+  //'main dishes':
+  // full string description, adj entree with adj side1 and adj side2
 
-  // buildSection(name, num) {
-  //   switch (name) {
-  //     case 'Apps':
+  //lunch
+  // full string description, adj entree with adj side1
+  // 
 
-  //     case 'Lunch':
+  //apps
+  // adj side1
 
-  //     case 'Entrees':
+  //sides
+  // side1
 
-  //     case 
+  //desserts
+  // adj entree
 
-  //     default:
-  //   }
+  parseRawFoods(obj) {
+    // //for each object in [foods] split description at 'with' and 'and' , then 
+    // let andSplit = obj.description.split(' '); // split = [adj entree with adj side1, adj side2]
+    // andSplit[0].split
+  }
 
-  // }
+  uniqueWordsOnly() {
 
-  // }
+  }
 
-  // getMenu(numberOfDishes) {
-  //   Axios.get(`https://entree-f18.herokuapp.com/v1/menu/{dishes}`)
-  //     .then(res => {
-  //       console.log(res);
-  //       this.setState({ menu: res.data });
-  //     });
+  buildSection(style, num) {
+    switch (style) {
+      case 'mainDishes':
+        // full string description, adj entree with adj side1 and adj side2
+        break
+      case 'lunch':
+        // full string description, adj entree with adj side1
+        break
+      case 'apps':
+        // adj side1
+        break
+      case 'sides':
+        // side1
+        break
+      case "desserts":
+        // adj entree
+        break
+      default:
+    }
+  }
 
-  // }
+  
+
+  getFoods() {
+    Axios.get(`https://entree-f18.herokuapp.com/v1/menu/25`)
+      .then(res => {
+        this.setState({ rawFoods: res.data });
+        
+        console.log(this.state.rawFoods);
+      });
+
+  }
 
   componentDidMount() {
     //load localStorage if present
-    let storedData = window.localStorage.getItem('menu')
+    this.getFoods();
+    let storedData = window.localStorage.getItem('rawFoods')
     if (storedData) {
-      this.setState({ menu: JSON.parse(storedData) })
+      this.setState({ rawFoods: JSON.parse(storedData) })
     } else {
-      window.localStorage.setItem('menu', JSON.stringify({}))
+      window.localStorage.setItem('rawFoods', JSON.stringify({}))
     }
 
   }
   componentDidUpdate() {
     //save list to localStorage on unload.
-    window.localStorage.setItem('menu', JSON.stringify(this.state.menu))
+    window.localStorage.setItem('rawFoods', JSON.stringify(this.state.foods))
   }
 
-  price() {
-
+  price(rangeLow, rangeHigh) {
+    let cost = rangeLow + (Math.random()*rangeHigh - rangeLow);
+    return cost;
   }
 
 
