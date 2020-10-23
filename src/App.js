@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './Components/Header.js'
 import Menu from './Components/Menu.js'
 import Staff from './Components/Staff'
-import {  } from 'reactstrap';
+import { } from 'reactstrap';
 import Remy from "./img/remy.png";
 import Alfredo from "./img/alfredo.jpg";
 import Colette from "./img/Colette.png";
@@ -14,48 +14,48 @@ class App extends Component {
     super(props)
     this.state = {
       rawFoods: [
-
+        //container for API result
       ],
 
       adjectives: [
-
+        //container to put all food adjectives into
       ],
 
-      entrees: [
-
+      entrees: [ 
+        //container to put all entree nouns into
       ],
 
       sides: [
-
+        //container to put all side nouns into
       ],
-      
+
       menu: [
         {
-          name: "apps",
+          name: "Appetizers",
           qty: 8,
           lowRange: 6,
           highRange: 12
         },
         {
-          name: "lunch",
+          name: "Lunch",
           qty: 10,
           lowRange: 12,
           highRange: 25
         },
         {
-          name: "mainDishes",
+          name: "Main Dishes",
           qty: 15,
           lowRange: 15,
           highRange: 35
         },
         {
-          name: "sides",
+          name: "Sides",
           qty: 12,
           lowRange: 3,
           highRange: 5
         },
         {
-          name: "desserts",
+          name: "Desserts",
           qty: 8,
           lowRange: 6,
           highRange: 10
@@ -90,7 +90,27 @@ class App extends Component {
       ]
     }
 
+    this.getFoods = this.getFoods.bind(this);
     this.price = this.price.bind(this);
+    //this.parseRawFoods = this.parseRawFoods.bind(this);
+  }
+
+  componentDidMount() {
+    //load localStorage if present
+    // let storedData = window.localStorage.getItem('rawFoods')
+    // if (storedData) {
+      //   this.setState({ rawFoods: JSON.parse(storedData) })
+      // } else {
+        //   window.localStorage.setItem('rawFoods', JSON.stringify({}))
+        // }    
+    this.getFoods();
+    console.log(this.state.rawFoods);
+    this.parseRawFoods(this.state.rawFoods);
+
+  }
+  componentDidUpdate() {
+    //save list to localStorage on unload.
+    //window.localStorage.setItem('rawFoods', JSON.stringify(this.state.foods))
   }
 
 
@@ -120,71 +140,28 @@ class App extends Component {
   //desserts
   // adj entree
 
-  parseRawFoods(obj) {
-    // //for each object in [foods] split description at 'with' and 'and' , then 
-    // let andSplit = obj.description.split(' '); // split = [adj entree with adj side1, adj side2]
-    // andSplit[0].split
-  }
-
-  uniqueWordsOnly() {
-
-  }
-
-  buildSection(style, num) {
-    switch (style) {
-      case 'mainDishes':
-        // full string description, adj entree with adj side1 and adj side2
-        break
-      case 'lunch':
-        // full string description, adj entree with adj side1
-        break
-      case 'apps':
-        // adj side1
-        break
-      case 'sides':
-        // side1
-        break
-      case "desserts":
-        // adj entree
-        break
-      default:
-    }
-  }
-
-  
-
   getFoods() {
     Axios.get(`https://entree-f18.herokuapp.com/v1/menu/25`)
       .then(res => {
-        this.setState({ rawFoods: res.data });
-        
-        console.log(this.state.rawFoods);
-      });
+        this.setState({ rawFoods: res.data.menu_items });
+      })
+  }
+
+  parseRawFoods(arr) {
+    //for each object in [rawFoods] split description at 'with' and 'and'
+    console.log(arr)
+    // let splitOne = this.state.rawFoods[i].description.split('and '); // split = [adj entree with adj side1, adj side2]
+    // console.log(splitOne);
+    // let _side = splitOne.splice(1, 1);
+    // console.log(_side);
 
   }
 
-  componentDidMount() {
-    //load localStorage if present
-    this.getFoods();
-    let storedData = window.localStorage.getItem('rawFoods')
-    if (storedData) {
-      this.setState({ rawFoods: JSON.parse(storedData) })
-    } else {
-      window.localStorage.setItem('rawFoods', JSON.stringify({}))
-    }
-
-  }
-  componentDidUpdate() {
-    //save list to localStorage on unload.
-    window.localStorage.setItem('rawFoods', JSON.stringify(this.state.foods))
-  }
 
   price(rangeLow, rangeHigh) {
-    let cost = rangeLow + (Math.random()*rangeHigh - rangeLow);
+    let cost = rangeLow + (Math.random() * rangeHigh - rangeLow);
     return cost;
   }
-
-
 
   render() {
     return (
