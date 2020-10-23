@@ -3,9 +3,9 @@ import { Jumbotron, Media, Row, Col } from 'reactstrap';
 
 
 function Menu(props) {
+  console.log(props.apps);
   return (
     <>
-
       {/* Static Chef's Special Section */}
       <Jumbotron className="container-fluid">
         <Media>
@@ -38,78 +38,111 @@ function Menu(props) {
         </Media>
       </Jumbotron>
 
-
-
-      {/* Dynamic Apps */}      
+      {/* Dynamic Apps */}
       <Jumbotron className="container-fluid pt-4">
         <Row>
           <Col>
             <h3 className="text-center">{props.menu[0].name}</h3>
+            <hr />
           </Col>
         </Row>
-        <Row>
-          <Col className="col-9 text-left">
-            <h5>Peevish chicken leg</h5>
-            <h6>with swaddled snow peas and enveloped pumpkin</h6>
-          </Col>
-          <Col className="col-3 text-right">
-            <h5>€25</h5>
-          </Col>
-        </Row>
-      </Jumbotron>
-      
-
-      {/* Dynamic Lunch */}
-      <Jumbotron className="container-fluid">
-        <Row>
-          <Col className="col-9 text-left">
-            <h6>Food</h6>
-          </Col>
-          <Col className="col-3 text-right">
-            <h6>€Price</h6>
-          </Col>
-        </Row>
-      </Jumbotron>
-
-      {/* Dynamic Main Dishes */}
-      <Jumbotron className="container-fluid">
-        <Row>
-          <Col className="col-9 text-left">
-            <h6>Food</h6>
-          </Col>
-          <Col className="col-3 text-right">
-            <h6>€Price</h6>
-          </Col>
-        </Row>
-      </Jumbotron>
-
-      {/* Dynamic Sides */}
-      <Jumbotron className="container-fluid">
-        <Row>
-          <Col className="col-9 text-left">
-            <h6>Food</h6>
-          </Col>
-          <Col className="col-3 text-right">
-            <h6>€Price</h6>
-          </Col>
-        </Row>
-      </Jumbotron>
-
-      {/* Dynamic Desserts */}
-      <Jumbotron className="container-fluid">
-        <Row>
-          <Col className="col-9 text-left">
-            <h6>Food</h6>
-          </Col>
-          <Col className="col-3 text-right">
-            <h6>€Price</h6>
-          </Col>
-        </Row>
+        {props.apps.map((item, idx) =>
+          <Row className="my-2">
+            <Col className="col-9 text-left">
+              <h5 key={idx + 100}>{item}</h5>
+            </Col>
+            <Col className="col-3 text-right">
+              <h5>€{item.length}</h5>
+            </Col>
+          </Row>
+        )}
       </Jumbotron>
 
 
+
+
+      <Jumbotron className="container-fluid pt-4">
+        <Row>
+          <Col>
+            <h3 className="text-center">{props.menu[1].name}</h3>
+            <hr />
+          </Col>
+        </Row>
+        {
+          props.lunch.map((item, idx) =>
+            <Row className="my-2">
+              <Col className="col-9 text-left">
+                <h5 key={idx + 200}>{item}</h5>
+              </Col>
+              <Col className="col-3 text-right">
+                <h5>€{item.length}</h5>
+              </Col>
+            </Row>
+          )
+        }
+      </Jumbotron>
+
+      <Jumbotron className="container-fluid pt-4">
+        <Row>
+          <Col>
+            <h3 className="text-center">{props.menu[2].name}</h3>
+            <hr />
+
+          </Col>
+        </Row>
+        {props.main.map((item, idx) =>
+          <Row className="my-2">
+            <Col className="col-9 text-left">
+              <h5 key={idx + 400}>{item}</h5>
+            </Col>
+            <Col className="col-3 text-right">
+              <h5>€{item.length}</h5>
+            </Col>
+          </Row>
+        )}
+      </Jumbotron>
+
+      <Jumbotron className="container-fluid pt-4">
+        <Row>
+          <Col>
+            <h3 className="text-center">{props.menu[3].name}</h3>
+            <hr />
+
+          </Col>
+        </Row>
+        {props.sides.map((item, idx) =>
+          <Row className="my-2">
+            <Col className="col-9 text-left">
+              <h5 key={idx + 600}>{item}</h5>
+            </Col>
+            <Col className="col-3 text-right">
+              <h5>€{item.length}</h5>
+            </Col>
+          </Row>
+        )}
+      </Jumbotron>
+
+      <Jumbotron className="container-fluid pt-4">
+        <Row>
+          <Col>
+            <h3 className="text-center">{props.menu[4].name}</h3>
+            <hr />
+
+          </Col>
+        </Row>
+        {props.desserts.map((item, idx) =>
+          <Row className="my-2">
+            <Col className="col-9 text-left">
+              <h5 key={idx + 700}>{item}</h5>
+            </Col>
+            <Col className="col-3 text-right">
+              <h5>€{item.length}</h5>
+            </Col>
+          </Row>
+        )}
+      </Jumbotron>
     </>
   );
-};
+}
 
 export default Menu;

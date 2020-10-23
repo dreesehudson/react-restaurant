@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Restaurant Menu Splash Page"
-    />
 
-    <title>Ratatouille</title>
-  </head>
-  <body>
-    <div id="root"></div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Restaurant Menu Splash Page" />
 
-    </body>
-  </body>
+  <title>Ratatouille</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAPQqWBkkECqTrwriVCyKnLIPlS_s2l7OA",
+      authDomain: "gusteaus-restaurant.firebaseapp.com",
+      databaseURL: "https://gusteaus-restaurant.firebaseio.com",
+      projectId: "gusteaus-restaurant",
+      storageBucket: "gusteaus-restaurant.appspot.com",
+      messagingSenderId: "17655341758",
+      appId: "1:17655341758:web:8c225ca6a54018f9c5f4ef"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</body>
+
+
 </html>
